@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All</title>
+</head>
+<body>
+    <h1>Here... all recipients that uploaded with their certificates</h1>
+    <table style="border: solid 2px black;">
+        {% if recipients %}
+          
+        <tr>
+            <th>SI.No</th>
+            <th>Certificate</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Delete</th>
+            
+        </tr>
+        {% for recipient in recipients %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td><img src="{{recipient.file.url}}" style="width: 200px;height: 120px; border: solid 3px rgb(90, 89, 89);" alt="{{recipient.file}}"></td>
+            <td>{{recipient.name}}</td>
+            <td>{{recipient.email}}</td>
+            <td><a href=" {% url 'mail:delete' recipient.id %}"><button class="del"><i class="fa-solid fa-trash"></i>Del</button></a></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        <a href=" {% url 'mail:mail' %}"><button>Send Email</button></a>
+        <a style="margin-left: 20px;" href=" {% url 'mail:home' %}"><button>Back</button></a><br><br>
+    </table>
+    <script>
+        var btnDlt = document.getElementsByClassName('del')[0]
+        btnDlt.addEventListener('click',()=>{
+            if (confirm('Do you want delete the recipient?')){
+                return true
+            }else{
+                return false
+            }
+        })
+        
+    </script>
+</body>
+</html>

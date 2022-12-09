@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Collection</title>
+</head>
+<body>
+    <a href=" {% url 'mail:view' %}"><button>View all Mails</button></a>
+    {% if messages %}
+    <div class="message" style="padding: 10px;margin: 10px; position:fixed; bottom: 10; right: 0; background: rgb(195, 234, 196);">
+        <ul class="messages" style="list-style: none;">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <h1 class="head">I am the mail sender</h1>
+    <p class="info">Upload the Datas to the website and Send Mail with messages and files</p>
+    <form action="add" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- <label for="name">Enter the Client's Name: <input type="text" name="name" id="name"></label><br><br>
+        <label for="email">Enter the Client's Email: <input type="email" name="email" id="email"></label><br><br>
+        <label for="image">Enter the Client's File: <input type="file" name="image" id="image"></label><br><br> -->
+        <input type="submit" value="Add Recipient">
+    </form>
+</body>
+</html>
